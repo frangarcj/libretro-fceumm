@@ -164,6 +164,19 @@ else ifeq ($(platform), vita)
 	STATIC_LINKING=1
 	EXTERNAL_ZLIB=1
 
+# PS4
+else ifeq ($(platform), orbis)
+	TARGET := $(TARGET_NAME)_libretro_$(platform).a
+	fpic := -fPIE
+	CC = clang$(EXE_EXT)
+	AR = ar$(EXE_EXT)
+	PLATFORM_DEFINES := -DORBIS
+	CFLAGS += -Wall -pedantic -Wno-zero-length-array -Wno-format-pedantic
+	CFLAGS += -D__PS4__ -I$(PS4SDK)/include -I $(PS4SDK)/include/sce
+	CFLAGS += -target x86_64-scei-ps4-elf -fPIE
+	STATIC_LINKING=1
+	EXTERNAL_ZLIB=1
+
 # DOS
 else ifeq ($(platform), dos)
 	TARGET := $(TARGET_NAME)_libretro_$(platform).a
